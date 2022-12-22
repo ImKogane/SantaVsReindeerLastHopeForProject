@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Unity.Netcode;
 
-public class VFXLifetime : MonoBehaviour
+public class VFXLifetime : NetworkBehaviour
 {
     private float lifetime = 0.3f;
 
@@ -16,7 +17,14 @@ public class VFXLifetime : MonoBehaviour
 
         if (lifetime <= 0)
         {
-            Destroy(gameObject);
+            DestroyVFXServerRpc();
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void DestroyVFXServerRpc()
+    {
+        gameObject.GetComponent<NetworkObject>().Despawn();
+        Destroy(gameObject);
     }
 }

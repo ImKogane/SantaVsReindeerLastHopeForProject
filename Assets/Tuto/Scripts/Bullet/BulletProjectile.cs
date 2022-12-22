@@ -7,7 +7,8 @@ using StarterAssets;
 public class BulletProjectile : NetworkBehaviour
 {
 
-
+    private GameObject m_PrefabInstance;
+    private NetworkObject m_SpawnedNetworkObject;
     public ThirdPersonController parent;
     [SerializeField] private GameObject VFX;
 
@@ -53,14 +54,18 @@ public class BulletProjectile : NetworkBehaviour
         {
             
             //Hit Target
-            //Instantiate(VFX, transform.position, Quaternion.identity);
+            m_PrefabInstance = Instantiate(VFX, transform.position, Quaternion.identity);
+            m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
+            m_SpawnedNetworkObject.Spawn();
             EnemyStats targetEnemy = other.GetComponent<EnemyStats>();
             targetEnemy.PV -= bulletDamage;
         }
         else
         {
             //HitSomethingElse
-            //Instantiate(VFX, transform.position, Quaternion.identity);
+            m_PrefabInstance = Instantiate(VFX, transform.position, Quaternion.identity);
+            m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
+            m_SpawnedNetworkObject.Spawn();
         }
 
         if (IsOwner)
