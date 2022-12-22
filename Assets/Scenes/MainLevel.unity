@@ -4414,6 +4414,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 173681329}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &173945827 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 1511034760562692458, guid: 34191e115e2b4734eacbf00de0c41d9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 654543273}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &174524928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f0916b1fab5edcd47b374ab375352d5a,
@@ -14757,7 +14763,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &578464235
 PrefabInstance:
@@ -31218,7 +31224,7 @@ RectTransform:
   m_Children:
   - {fileID: 1302631121}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -32581,6 +32587,7 @@ MonoBehaviour:
   joinInput: {fileID: 395634424}
   codeText: {fileID: 803358296}
   _mainMenu: {fileID: 1246040916}
+  _aimUI: {fileID: 173945827}
 --- !u!1001 &1303999639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47770,7 +47777,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1985765210
 PrefabInstance:
@@ -50486,7 +50493,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2063462734
 MonoBehaviour:
