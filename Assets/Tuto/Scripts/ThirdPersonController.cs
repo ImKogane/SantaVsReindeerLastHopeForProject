@@ -437,8 +437,15 @@ namespace StarterAssets
         {
             if (PV <= 0) 
             {
-                Destroy(gameObject);
+                DestroyPlayerServerRpc();
             }
+        }
+
+        [ServerRpc]
+        private void DestroyPlayerServerRpc()
+        {
+            gameObject.GetComponent<NetworkObject>().Despawn();
+            Destroy(gameObject);
         }
 
 
