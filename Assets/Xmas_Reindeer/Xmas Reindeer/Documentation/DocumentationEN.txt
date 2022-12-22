@@ -1,0 +1,58 @@
+Description
+-----------------------------------------------------------
+This wonderful package contains a model reindeer with 2 interchangeable accessories between them, to create variations (see demo), these assets will allow you to get reindeer Ready to use for a game in 2.5D or 3D. They are provided with 12 animations already set in an animation controller.
+
+3D models
+-----------------------------------------------------------
+Reindeer 1400 Faces (2780 Tris), 3 Material
+scarf 57 Faces (114 Tris), 1 Common accessory material
+Bell 156 Faces (312 Tris), 1 Common accessory material
+
+List of available animations
+-----------------------------------------------------------
+- Angry
+- Idle
+- Jump
+- Jump long
+- Run
+- Run jump
+- Walk
+- Walk jump
+- Wait begin
+- Wait cycle
+- Wait end
+- Walk backward
+
+List of textures
+-----------------------------------------------------------
+- Reindeer Brown texture : (Skin_dif)
+- Reindeer Gray texture : (Skin_dif_grey)
+- Reindeer White texture : (Skin_dif_white)
+- Reindeer texture Specular : (Skin_dif, Skin_dif_grey, Skin_dif_white)
+- Reindeer texture emission : (Skin_dif, Skin_dif_grey, Skin_dif_white)
+- Accessory texture coulor 01 : (Reindeer_accessory_dif)
+- Accessory texture coulor 02 : (Reindeer_accessory_dif)
+- Accessory texture roughness : (Reindeer_&_dif)
+
+Using the animation controller
+-----------------------------------------------------------
+Parameters
+	Speed
+		-1 Walk backward
+		0  idle
+		1  walk
+		2  Run
+
+	Jump
+		0 no jump
+		1 jump (only for idle, walk, run)
+
+	Angry
+		0 no angry
+		1 angry attack (only on idle)
+
+	Wait
+		0 no Wait
+		1 go Wait (cycle, as long as wait equals 1)
+		1 -> 0 end of cycle
+
