@@ -114,7 +114,6 @@ namespace StarterAssets
         private Transform debugTransform;
         private Transform spawnBulletPosition;
         private CinemachineVirtualCamera aimVirtualCamera;
-        private ThirdPersonController thirdPersonController;
         private bool canShoot;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -177,6 +176,8 @@ namespace StarterAssets
                 _playerInput = GetComponent<PlayerInput>();
                 _playerInput.enabled = true;
                 GameObject.FindWithTag("PlayerFollowCamera").GetComponent<CinemachineVirtualCamera>().Follow = transform.GetChild(0).transform;
+                aimVirtualCamera = GameObject.FindWithTag("AimingCamera").GetComponent<CinemachineVirtualCamera>();
+                aimVirtualCamera.Follow = transform.GetChild(0).transform;
                 AimStart();
             }
         }
@@ -437,10 +438,6 @@ namespace StarterAssets
 
         private void AimStart()
         {
-            GameObject _tempCamera = GameObject.FindGameObjectWithTag("AimingCamera");
-            aimVirtualCamera = _tempCamera.GetComponent<CinemachineVirtualCamera>();
-            aimVirtualCamera.Follow = GameObject.Find("PlayerCameraRoot").transform;
-            thirdPersonController = GetComponent<ThirdPersonController>();
             debugTransform = GameObject.FindGameObjectWithTag("AimPoint").transform;
             spawnBulletPosition = GameObject.FindGameObjectWithTag("FirePosition").transform;
             shootCooldown = 0.8f;
@@ -462,8 +459,8 @@ namespace StarterAssets
             if (_input.aim)
             {
                 aimVirtualCamera.gameObject.SetActive(true);
-                thirdPersonController.SetSensitivity(aimSensitivity);
-                thirdPersonController.SetRotateOnMove(false);
+                SetSensitivity(aimSensitivity);
+                SetRotateOnMove(false);
 
                 GameObject _tempUI = GameObject.FindGameObjectWithTag("Crosshair");
                 Image _tempImage = _tempUI.GetComponent<Image>();
@@ -485,8 +482,8 @@ namespace StarterAssets
             else
             {
                 aimVirtualCamera.gameObject.SetActive(false);
-                thirdPersonController.SetSensitivity(normalSensitivity);
-                thirdPersonController.SetRotateOnMove(true);
+                SetSensitivity(normalSensitivity);
+                SetRotateOnMove(true);
 
                 GameObject _tempUI = GameObject.FindGameObjectWithTag("Crosshair");
                 Image _tempImage = _tempUI.GetComponent<Image>();
