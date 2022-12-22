@@ -108,7 +108,7 @@ namespace StarterAssets
         [SerializeField] private float aimSensitivity;
         [SerializeField] private float shootCooldown;
         [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
-        [SerializeField] public Transform bulletProjectile;
+        [SerializeField] public GameObject bulletProjectile;
         [SerializeField] private Sprite crosshairNormal;
         [SerializeField] private Sprite crosshairAim;
         private Transform debugTransform;
@@ -500,10 +500,10 @@ namespace StarterAssets
             {
                 if (shootCooldown <= 0)
                 {
-                    if (canShoot == true)
+                    if (canShoot == true && IsClient && IsOwner)
                     {
                         Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
-                        spawnProjectileNetworkServerRpc(aimDir);
+                        spawnProjectileNetworkServerRpc(aimDir, spawnBulletPosition.position);
                         shootCooldown = 0.8f;
                         _input.shoot = false;
                     }
@@ -512,9 +512,9 @@ namespace StarterAssets
         }
 
         [ServerRpc]
-        private void spawnProjectileNetworkServerRpc(Vector3 posTemp){
-            Debug.Log(m_PrefabInstance);
-            m_PrefabInstance = Instantiate(bulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(posTemp, Vector3.up)).gameObject;
+        private void spawnProjectileNetworkServerRpc(Vector3 posTemp, Vector3 pos){
+            m_PrefabInstance = Instantiate(bulletProjectile, pos, Quaternion.LookRotation(posTemp, Vector3.up));
+            Debug.Log("prefab instance : " + m_PrefabInstance);
             m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
             m_SpawnedNetworkObject.Spawn();
         }
