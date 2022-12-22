@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-//using Photon.Pun;
+using Unity.Netcode;
 
-public class WaveSpawner : MonoBehaviour
+public class WaveSpawner : NetworkBehaviour
 {
+    public bool DestroyWithSpawner;        
+    private GameObject m_PrefabInstance;
+    private NetworkObject m_SpawnedNetworkObject;
+    
+    
     private static WaveSpawner instance;
     public static WaveSpawner Instance    
     {
@@ -33,11 +38,27 @@ public class WaveSpawner : MonoBehaviour
     }
 
 
+    // protected override void OnNetworkSpawn()
+    // {
+    //     // enabled = IsServer;            
+    //     // if (!enabled)
+    //     // {
+    //     //     return;
+    //     // }
+    //     // // Instantiate the GameObject Instance
+    //     // m_PrefabInstance = Instantiate(PrefabToSpawn);
+    //     //     
+    //     // // Optional, this example applies the spawner's position and rotation to the new instance
+    //     // m_PrefabInstance.transform.position = transform.position;
+    //     // m_PrefabInstance.transform.rotation = transform.rotation;
+    //         
+    //     
+    // }
+
+
     public List<GameObject> spawnedEnemy = new List<GameObject>();
     public Transform[] spawningPoints = new Transform[0];
-
-    public GameObject particule;
-
+    
     [SerializeField]
     private float TimeBetweenWaves = 5f;
 
@@ -100,8 +121,11 @@ public class WaveSpawner : MonoBehaviour
     {
         int random = Random.Range(0, spawnedEnemy.Count);
         int random1 = Random.Range(0, spawningPoints.Length);
-        Instantiate(spawnedEnemy[random], spawningPoints[random1].transform.position, spawningPoints[random1].rotation);
-
+       m_PrefabInstance = Instantiate(spawnedEnemy[random], spawningPoints[random1].transform.position, spawningPoints[random1].rotation);
+        // Get the instance's NetworkObject and Spawn
+        m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
+        m_SpawnedNetworkObject.Spawn();
         EnemiesAlive++;
+        Debug.Log(EnemiesAlive);
     }
 }
