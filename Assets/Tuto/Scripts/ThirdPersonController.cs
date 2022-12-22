@@ -110,7 +110,6 @@ namespace StarterAssets
         [SerializeField] private float shootCooldown;
         [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
         [SerializeField] public GameObject bulletProjectile;
-        [SerializeField] private List <GameObject> spawnedProjectiles = new List<GameObject>();
         [SerializeField] private Sprite crosshairNormal;
         [SerializeField] private Sprite crosshairAim;
 
@@ -522,20 +521,9 @@ namespace StarterAssets
         [ServerRpc]
         private void spawnProjectileNetworkServerRpc(Vector3 posTemp, Vector3 pos){
             m_PrefabInstance = Instantiate(bulletProjectile, pos, Quaternion.LookRotation(posTemp, Vector3.up));
-            Debug.Log("prefab instance : " + m_PrefabInstance);
-            spawnedProjectiles.Add(m_PrefabInstance);
-            m_PrefabInstance.GetComponent<BulletProjectile>().parent = this;
             m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
             m_SpawnedNetworkObject.Spawn();
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        public void DestroyServerRpc()
-        {
-            GameObject toDestroy = spawnedProjectiles[0];
-            toDestroy.GetComponent<NetworkObject>().Despawn();
-            spawnedProjectiles.Remove(toDestroy);
-            Destroy(toDestroy);
-        }
     }
 }

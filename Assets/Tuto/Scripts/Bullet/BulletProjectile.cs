@@ -9,7 +9,6 @@ public class BulletProjectile : NetworkBehaviour
 
     private GameObject m_PrefabInstance;
     private NetworkObject m_SpawnedNetworkObject;
-    public ThirdPersonController parent;
     [SerializeField] private GameObject VFX;
 
     [Header("Spell stats")]
@@ -43,7 +42,7 @@ public class BulletProjectile : NetworkBehaviour
             bTime -= Time.deltaTime;
             if (bTime <= 0) 
             {
-                parent.DestroyServerRpc();
+                DestroyServerRpc();
             }
         }
     }
@@ -68,11 +67,16 @@ public class BulletProjectile : NetworkBehaviour
             m_SpawnedNetworkObject.Spawn();
         }
 
-        if (IsOwner)
-        {
-            parent.DestroyServerRpc();
-        }
+        DestroyServerRpc();
 
+    }
+
+    [ServerRpc]
+    public void DestroyServerRpc()
+    {
+
+        gameObject.GetComponent<NetworkObject>().Despawn();
+        Destroy(gameObject);
     }
 
     
