@@ -4,6 +4,7 @@ using Cinemachine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System.Collections.Generic;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -109,8 +110,10 @@ namespace StarterAssets
         [SerializeField] private float shootCooldown;
         [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
         [SerializeField] public GameObject bulletProjectile;
+        [SerializeField] private List <GameObject> spawnedProjectiles = new List<GameObject>();
         [SerializeField] private Sprite crosshairNormal;
         [SerializeField] private Sprite crosshairAim;
+
         private Transform debugTransform;
         private Transform spawnBulletPosition;
         private CinemachineVirtualCamera aimVirtualCamera;
@@ -520,8 +523,19 @@ namespace StarterAssets
         private void spawnProjectileNetworkServerRpc(Vector3 posTemp, Vector3 pos){
             m_PrefabInstance = Instantiate(bulletProjectile, pos, Quaternion.LookRotation(posTemp, Vector3.up));
             Debug.Log("prefab instance : " + m_PrefabInstance);
+            spawnedProjectiles.Add(m_PrefabInstance);
+            m_PrefabInstance.GetComponent<BulletProjectile>().parent = this;
             m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
             m_SpawnedNetworkObject.Spawn();
+        }
+
+        [ServerRpc]
+        public void DestroyServerRpc()
+        {
+            GameObject toDestroy = spawnedProjectiles[0];
+            toDestroy.GetComponent<NetworkObject>().Despawn();
+            spawnedProjectiles.Remove(toDestroy);
+            Destroy(toDestroy);
         }
     }
 }
