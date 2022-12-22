@@ -1,0 +1,58 @@
+Description
+-----------------------------------------------------------
+Ce merveilleux package contient un modèle rennes avec 2 accessoires interchangeables entre eux permettant de creer des variations (voir demo), ces assets vous permettront d'obtenir des rennes près à l'emploi pour un jeu en 2,5D ou en 3D. Ils sont fournit avec 12 animations déja settées dans un animation controller.
+
+Les modèle 3D
+-----------------------------------------------------------
+Renne 1400 Faces (2780 Tris), 3 Matériaux
+Echarpe 57 Faces (114 Tris), 1 Material commun accesoire
+Cloche 156 Faces (312 Tris), 1 Material commun accesoire
+
+Liste des animations disponibles
+-----------------------------------------------------------
+- Angry
+- Idle
+- Jump
+- Jump long
+- Run
+- Run jump
+- Walk
+- Walk jump
+- Wait begin
+- Wait cycle
+- Wait end
+- Walk backward
+
+Liste des textures
+-----------------------------------------------------------
+- Renne texture brun : (Skin_dif)
+- Renne texture gris : (Skin_dif_grey)
+- Renne texture blanc : (Skin_dif_white)
+- Renne texture Specular : (Skin_dif, Skin_dif_grey, Skin_dif_white)
+- Renne texture emission : (Skin_dif, Skin_dif_grey, Skin_dif_white)
+- Accessoire texture couleur 01 : (Reindeer_accessoire_dif)
+- Accessoire texture couleur 02 : (Reindeer_accessoire_dif)
+- Accessoire texture roughness : (Reindeer_accessoire_dif)
+
+Utilisation de l'animation controller
+-----------------------------------------------------------
+Parameters
+	Speed
+		-1 Walk backward
+		0  idle
+		1  walk
+		2  Run
+
+	Jump
+		0 no jump
+		1 jump (only for idle, walk, run)
+
+	Angry
+		0 no angry
+		1 angry attack (only on idle)
+
+	Wait
+		0 no Wait
+		1 go Wait (cycle tant que egale à 1)
+		1 -> 0 fin de cycle
+
