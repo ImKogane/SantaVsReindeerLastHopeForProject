@@ -3,6 +3,7 @@ using Unity.Netcode;
 using Cinemachine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -29,6 +30,7 @@ namespace StarterAssets
 
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
+        public float Sensitivity = 1.0f;
 
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
@@ -100,6 +102,21 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
+        // aim system
+        [Header("AimSystem")]
+        [SerializeField] private float normalSensitivity;
+        [SerializeField] private float aimSensitivity;
+        [SerializeField] private float shootCooldown;
+        [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
+        [SerializeField] public Transform bulletProjectile;
+        [SerializeField] private Sprite crosshairNormal;
+        [SerializeField] private Sprite crosshairAim;
+        private Transform debugTransform;
+        private Transform spawnBulletPosition;
+        private CinemachineVirtualCamera aimVirtualCamera;
+        private ThirdPersonController thirdPersonController;
+        private bool canShoot;
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
 #endif
@@ -107,6 +124,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private bool _rotateOnMove = true;
 
         private const float _threshold = 0.01f;
 
@@ -159,6 +177,7 @@ namespace StarterAssets
                 _playerInput = GetComponent<PlayerInput>();
                 _playerInput.enabled = true;
                 GameObject.FindWithTag("PlayerFollowCamera").GetComponent<CinemachineVirtualCamera>().Follow = transform.GetChild(0).transform;
+                AimStart();
             }
         }
 
@@ -174,6 +193,7 @@ namespace StarterAssets
                 JumpAndGravity();
                 GroundedCheck();
                 Move();
+                Aim();
             }
         }
 
@@ -402,6 +422,93 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            }
+        }
+
+        public void SetSensitivity(float newSensitivity)
+        {
+            Sensitivity = newSensitivity;
+        }
+
+        public void SetRotateOnMove(bool newRotateOnMove)
+        {
+            _rotateOnMove = newRotateOnMove;
+        }
+
+        private void AimStart()
+        {
+            GameObject _tempCamera = GameObject.FindGameObjectWithTag("AimingCamera");
+            aimVirtualCamera = _tempCamera.GetComponent<CinemachineVirtualCamera>();
+            aimVirtualCamera.Follow = GameObject.Find("PlayerCameraRoot").transform;
+            thirdPersonController = GetComponent<ThirdPersonController>();
+            debugTransform = GameObject.FindGameObjectWithTag("AimPoint").transform;
+            spawnBulletPosition = GameObject.FindGameObjectWithTag("FirePosition").transform;
+            shootCooldown = 0.8f;
+            canShoot = false;
+        }
+
+        private void Aim()
+        {
+            Vector3 mouseWorldPosition = Vector3.zero;
+
+            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+            {
+                debugTransform.position = raycastHit.point;
+                mouseWorldPosition = raycastHit.point;
+            }
+
+            if (_input.aim)
+            {
+                aimVirtualCamera.gameObject.SetActive(true);
+                thirdPersonController.SetSensitivity(aimSensitivity);
+                thirdPersonController.SetRotateOnMove(false);
+
+                GameObject _tempUI = GameObject.FindGameObjectWithTag("Crosshair");
+                Image _tempImage = _tempUI.GetComponent<Image>();
+                _tempImage.sprite = crosshairAim;
+
+                Vector3 worldAimTarget = mouseWorldPosition;
+                worldAimTarget.y = transform.position.y;
+                Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
+
+                transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+
+                canShoot = true;
+
+                if (shootCooldown > 0)
+                {
+                    shootCooldown -= Time.deltaTime;
+                }
+            }
+            else
+            {
+                aimVirtualCamera.gameObject.SetActive(false);
+                thirdPersonController.SetSensitivity(normalSensitivity);
+                thirdPersonController.SetRotateOnMove(true);
+
+                GameObject _tempUI = GameObject.FindGameObjectWithTag("Crosshair");
+                Image _tempImage = _tempUI.GetComponent<Image>();
+                _tempImage.sprite = crosshairNormal;
+
+                canShoot = false;
+
+                shootCooldown = 0.8f;
+            }
+
+            if (_input.shoot)
+            {
+                if (shootCooldown <= 0)
+                {
+                    if (canShoot == true)
+                    {
+                        Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
+                        Instantiate(bulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+                        shootCooldown = 0.8f;
+                        _input.shoot = false;
+                    }
+                }
             }
         }
     }
