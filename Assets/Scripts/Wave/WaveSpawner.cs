@@ -81,23 +81,25 @@ public class WaveSpawner : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EnemiesAlive > 0)
-        {
-            return;
-        }
-        else 
-        {
-            EnemyController.isMove = false;
-        }
+        if (IsServer){
+            if (EnemiesAlive > 0)
+            {
+                return;
+            }
+            else 
+            {
+                EnemyController.isMove = false;
+            }
 
-        if (countdown <= 0f)
-        {
-         
-            StartCoroutine(SpawnWave());
-            countdown = TimeBetweenWaves;
+            if (countdown <= 0f)
+            {
+            
+                StartCoroutine(SpawnWave());
+                countdown = TimeBetweenWaves;
+            }
+            countdown -= Time.deltaTime;
+        //Debug.Log("timer = " + countdown/TimeBetweenWaves);
         }
-        countdown -= Time.deltaTime;
-       //Debug.Log("timer = " + countdown/TimeBetweenWaves);
     }
 
   
