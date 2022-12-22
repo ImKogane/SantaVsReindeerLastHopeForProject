@@ -2695,7 +2695,8 @@ MonoBehaviour:
   aimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  bulletProjectile: {fileID: 0}
+  bulletProjectile: {fileID: 867255492874219362, guid: ca19f4ee70c007546958cf37f817d52b,
+    type: 3}
   crosshairNormal: {fileID: 21300000, guid: 4898e788822c97347b2cf281807b5a03, type: 3}
   crosshairAim: {fileID: 21300000, guid: 6958c01fcf4ec4c4892baf4385514d11, type: 3}
 --- !u!114 &2393110367882600227
