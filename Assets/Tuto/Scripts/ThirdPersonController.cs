@@ -433,11 +433,17 @@ namespace StarterAssets
             }
         }
 
+        public void TakeDamage(float damage)
+        {
+            PV -= damage;
+        }
+
         public void Death()
         {
             if (PV <= 0) 
             {
                 DestroyPlayerServerRpc();
+                Debug.Log("Death");
             }
         }
 

@@ -4,13 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-//using Photon.Pun;
+using Unity.Netcode;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : NetworkBehaviour
 {
     [SerializeField] private Animator anim;
 
     [SerializeField] private AnimationClip clip;
+
+    private ThirdPersonController playerController;
 
     private Transform movePositionTransform;
     
@@ -33,7 +35,7 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemyStats = GetComponent<EnemyStats>();
-    
+
     }
 
     void Start()
@@ -49,7 +51,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         GetNearestPlayer();
-        if (canMove /*&& PhotonNetwork.IsMasterClient*/ == true)
+        if (canMove == true)
         {
             agent.destination = movePositionTransform.position;
         }
@@ -114,12 +116,17 @@ public class EnemyController : MonoBehaviour
         inAttack = true;
         //canMove = false;
         SetCooldown();
-        ThirdPersonController thirdPerson = player.GetComponent<ThirdPersonController>();
-        thirdPerson.PV -= enemyStats.damage;
-        Debug.Log(thirdPerson.PV);
+        playerController.TakeDamage(enemyStats.damage);
         yield return new WaitForSeconds(0.3f);
         anim.ResetTrigger("Attack");
     }
+
+    // [ServerRpc]
+    // private void AttackServerRpc(ThirdPersonController controller)
+    // {
+    //     controller.PV -= enemyStats.damage;
+    //     Debug.Log(controller.PV);
+    // }
 
     private void GetNearestPlayer()
     {
@@ -130,10 +137,12 @@ public class EnemyController : MonoBehaviour
             if(_tempPos < 2)
             {
                 movePositionTransform = i.transform;
+                playerController = i.GetComponent<ThirdPersonController>();
                 //isMove = false;
             } else {
                 int _tempRand = UnityEngine.Random.Range(0, players.Length);
                 movePositionTransform = players[_tempRand].transform;
+                playerController = players[_tempRand].GetComponent<ThirdPersonController>();
             }
         }
     }

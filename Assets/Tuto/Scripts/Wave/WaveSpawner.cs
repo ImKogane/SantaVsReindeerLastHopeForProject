@@ -79,7 +79,7 @@ public class WaveSpawner : NetworkBehaviour
             spawningPoints[i] = _tempSpawn[i].transform;
         }*/
         countdown = 5f;
-        Debug.Log("timer = " + countdown);
+        //Debug.Log("timer = " + countdown);
     }
 
     // Update is called once per frame
@@ -102,7 +102,7 @@ public class WaveSpawner : NetworkBehaviour
                 countdown = TimeBetweenWaves;
             }
             countdown -= Time.deltaTime;
-        Debug.Log("timer = " + countdown);
+        //Debug.Log("timer = " + countdown);
         }
     }
 
