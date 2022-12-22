@@ -108,15 +108,13 @@ namespace StarterAssets
         [SerializeField] private float aimSensitivity;
         [SerializeField] private float shootCooldown;
         [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
-        [SerializeField] public Transform bulletProjectile;
+        [SerializeField] private Transform bulletProjectile;
         [SerializeField] private Sprite crosshairNormal;
         [SerializeField] private Sprite crosshairAim;
         private Transform debugTransform;
         private Transform spawnBulletPosition;
         private CinemachineVirtualCamera aimVirtualCamera;
         private bool canShoot;
-        private GameObject m_PrefabInstance;
-        private NetworkObject m_SpawnedNetworkObject;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
@@ -513,10 +511,9 @@ namespace StarterAssets
 
         [ServerRpc]
         private void spawnProjectileNetworkServerRpc(Vector3 posTemp){
-            Debug.Log(m_PrefabInstance);
-            m_PrefabInstance = Instantiate(bulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(posTemp, Vector3.up)).gameObject;
-            m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
-            m_SpawnedNetworkObject.Spawn();
+            GameObject projectileInstance = Instantiate(bulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(posTemp, Vector3.up)).gameObject;
+            
+            projectileInstance.GetComponent<NetworkObject>().Spawn();
         }
     }
 }
