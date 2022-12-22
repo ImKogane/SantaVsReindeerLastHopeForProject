@@ -2689,6 +2689,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  PV: 100
   normalSensitivity: 1
   aimSensitivity: 0.5
   shootCooldown: 0
