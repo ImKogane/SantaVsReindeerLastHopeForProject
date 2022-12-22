@@ -6,7 +6,10 @@ TagManager:
   tags:
   - CinemachineTarget
   - PlayerFollowCamera
-  - WaveManager
+  - AimingCamera
+  - Crosshair
+  - AimPoint
+  - FirePosition
   layers:
   - Default
   - TransparentFX
