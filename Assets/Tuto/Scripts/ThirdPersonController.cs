@@ -529,7 +529,7 @@ namespace StarterAssets
             m_SpawnedNetworkObject.Spawn();
         }
 
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         public void DestroyServerRpc()
         {
             GameObject toDestroy = spawnedProjectiles[0];

@@ -37,12 +37,13 @@ public class BulletProjectile : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsOwner) return;
-
-        bTime -= Time.deltaTime;
-        if (bTime <= 0) 
+        if (IsOwner)
         {
-            parent.DestroyServerRpc();
+            bTime -= Time.deltaTime;
+            if (bTime <= 0) 
+            {
+                parent.DestroyServerRpc();
+            }
         }
     }
 
@@ -62,9 +63,11 @@ public class BulletProjectile : NetworkBehaviour
             //Instantiate(VFX, transform.position, Quaternion.identity);
         }
 
-        if (!IsOwner) return;
+        if (IsOwner)
+        {
+            parent.DestroyServerRpc();
+        }
 
-        parent.DestroyServerRpc();
     }
 
     
