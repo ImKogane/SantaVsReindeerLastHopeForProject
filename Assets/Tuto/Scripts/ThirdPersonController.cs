@@ -441,7 +441,12 @@ namespace StarterAssets
         private void AimStart()
         {
             debugTransform = GameObject.FindGameObjectWithTag("AimPoint").transform;
-            spawnBulletPosition = GameObject.FindGameObjectWithTag("FirePosition").transform;
+            GameObject s_FirePosition = this.transform.Find("FirePosition").gameObject;
+            if (s_FirePosition != null)
+            {
+                spawnBulletPosition = s_FirePosition.transform;
+            }
+            
             shootCooldown = 0.8f;
             canShoot = false;
         }
