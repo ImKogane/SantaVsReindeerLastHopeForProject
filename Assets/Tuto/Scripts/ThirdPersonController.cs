@@ -88,6 +88,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        public float PV;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -174,6 +175,7 @@ namespace StarterAssets
                 JumpAndGravity();
                 GroundedCheck();
                 Move();
+                Death();
             }
         }
 
@@ -404,5 +406,14 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+        
+        public void Death()
+        {
+            if (PV <= 0) 
+            {
+                Destroy(gameObject);
+            }
+        }
+
     }
 }

@@ -73,8 +73,8 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-
-
+            canAttack = true;
+             
         }
         return;
     }
@@ -115,7 +115,8 @@ public class EnemyController : MonoBehaviour
         //canMove = false;
         SetCooldown();
         ThirdPersonController thirdPerson = player.GetComponent<ThirdPersonController>();
-//        thirdPerson.PV -= enemyStats.damage;
+        thirdPerson.PV -= enemyStats.damage;
+        Debug.Log(thirdPerson.PV);
         yield return new WaitForSeconds(0.3f);
         anim.ResetTrigger("Attack");
     }
