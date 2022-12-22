@@ -123,11 +123,10 @@ public class WaveSpawner : NetworkBehaviour
     {
         int random = Random.Range(0, spawnedEnemy.Count);
         int random1 = Random.Range(0, spawningPoints.Length);
-       m_PrefabInstance = Instantiate(spawnedEnemy[random], spawningPoints[random1].transform.position, spawningPoints[random1].rotation);
+        m_PrefabInstance = Instantiate(spawnedEnemy[random], spawningPoints[random1].transform.position, spawningPoints[random1].rotation);
         // Get the instance's NetworkObject and Spawn
         m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
         m_SpawnedNetworkObject.Spawn();
         EnemiesAlive++;
-        Debug.Log(EnemiesAlive);
     }
 }

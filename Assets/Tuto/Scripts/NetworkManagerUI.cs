@@ -22,6 +22,7 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private GameObject codeText;
     //[SerializeField] private Button startButton;
     [SerializeField] private Canvas _mainMenu;
+    [SerializeField] private Canvas _aimUI;
 
     private void Awake(){
 
@@ -36,6 +37,7 @@ public class NetworkManagerUI : MonoBehaviour
         // startButton.onClick.AddListener(() => {
         //     startGame();
         // });
+        _aimUI.enabled = false;
 
     }
 
@@ -63,6 +65,7 @@ public class NetworkManagerUI : MonoBehaviour
 
             NetworkManager.Singleton.StartHost();
             _mainMenu.enabled = false;
+            _aimUI.enabled = true;
         } catch (RelayServiceException e){
             Debug.Log("Relay service error: " + e.Message);
         }
@@ -78,6 +81,7 @@ public class NetworkManagerUI : MonoBehaviour
 
             NetworkManager.Singleton.StartClient();
             _mainMenu.enabled = false;
+            _aimUI.enabled = true;
         } catch (RelayServiceException e){
             Debug.Log("Relay service error: " + e.Message);
         }
