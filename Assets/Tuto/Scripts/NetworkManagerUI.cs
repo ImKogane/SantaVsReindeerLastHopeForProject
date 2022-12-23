@@ -19,7 +19,6 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private Button createButton;
     [SerializeField] private Button joinButton;
     [SerializeField] private GameObject joinInput;
-    [SerializeField] private GameObject codeText;
     //[SerializeField] private Button startButton;
     [SerializeField] private Canvas _mainMenu;
     [SerializeField] private Canvas _aimUI;
@@ -59,7 +58,7 @@ public class NetworkManagerUI : MonoBehaviour
 
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
-            codeText.GetComponent<TMPro.TextMeshProUGUI>().text = joinCode;
+            joinCodeText.GetComponent<TMPro.TextMeshProUGUI>().text = joinCode;
             
             Debug.Log("code : " + joinCode);
 
@@ -69,7 +68,6 @@ public class NetworkManagerUI : MonoBehaviour
             NetworkManager.Singleton.StartHost();
             _mainMenu.enabled = false;
             _aimUI.enabled = true;
-            joinCodeText.GetComponent<TextMeshPro>().text = joinCode.ToString();
         } catch (RelayServiceException e){
             Debug.Log("Relay service error: " + e.Message);
         }
