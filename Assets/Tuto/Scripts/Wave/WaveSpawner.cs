@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using UnityEngine.UI;
+using TMPro;
 
 public class WaveSpawner : NetworkBehaviour
 {
@@ -70,7 +72,9 @@ public class WaveSpawner : NetworkBehaviour
 
     public int EnemiesAlive = 0;
 
-  
+    [SerializeField]
+    private GameObject waveCountText;
+
     private void Start()
     {
         /*GameObject[] _tempSpawn = GameObject.FindGameObjectsWithTag("Spawner");
@@ -112,6 +116,7 @@ public class WaveSpawner : NetworkBehaviour
     IEnumerator SpawnWave()
     {
         waveIndex++;
+        waveCountText.GetComponent<TextMeshPro>().text = waveIndex.ToString();
        
         for ( int i = 0; i < waveIndex; i++)
         {
