@@ -56,6 +56,8 @@ public class BulletProjectile : NetworkBehaviour
             m_PrefabInstance = Instantiate(VFX, transform.position, Quaternion.identity);
             m_SpawnedNetworkObject = m_PrefabInstance.GetComponent<NetworkObject>();
             m_SpawnedNetworkObject.Spawn();
+            Debug.Log("Touché");
+            // TakeDamageServerRpc(bulletDamage, other.GetComponent<NetworkObject>().OwnerClientId);
             EnemyStats targetEnemy = other.GetComponent<EnemyStats>();
             targetEnemy.PV -= bulletDamage;
         }
@@ -77,6 +79,13 @@ public class BulletProjectile : NetworkBehaviour
 
         gameObject.GetComponent<NetworkObject>().Despawn();
         Destroy(gameObject);
+    }
+
+    [ServerRpc]
+    private void TakeDamageServerRpc(float damage, ulong clientId)
+    {
+        // ennemies = GameObject.FindGameObjectsWithTag("ennemy");
+
     }
 
     

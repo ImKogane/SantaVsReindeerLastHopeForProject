@@ -4753,6 +4753,7 @@ GameObject:
   - component: {fileID: 7490580833676131928}
   - component: {fileID: 1452830410877071810}
   - component: {fileID: 2783065642914614669}
+  - component: {fileID: 462223067221341084}
   m_Layer: 0
   m_Name: Reindeer_white
   m_TagString: Untagged
@@ -4956,6 +4957,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &462223067221341084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815102117930112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a447b84ea78e843bc25d9314a3e936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1823625469791490

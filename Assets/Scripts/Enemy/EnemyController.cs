@@ -23,6 +23,8 @@ public class EnemyController : NetworkBehaviour
 
     private EnemyStats enemyStats;
 
+    // private NetworkVariable<float> PV = new NetworkVariable<float>();
+
     public float cooldown;
 
     public static bool isMove;
@@ -30,6 +32,19 @@ public class EnemyController : NetworkBehaviour
     private bool canMove;
     [SerializeField] private bool canAttack;
     private bool inAttack;
+
+    // public override void OnNetworkSpawn()
+    // {
+    //     if (IsServer)
+    //     {
+    //         PV = enemyStats.PV;
+    //     }
+    // }
+
+    // private void OnPVChanged()
+    // {
+    //     enemyStats.PV = PV;
+    // }
 
     void Awake()
     {

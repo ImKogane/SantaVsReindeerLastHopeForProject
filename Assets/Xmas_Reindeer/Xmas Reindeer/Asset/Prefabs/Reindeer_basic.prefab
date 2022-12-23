@@ -4726,6 +4726,7 @@ GameObject:
   - component: {fileID: 6892931826320772696}
   - component: {fileID: 1884949071013953209}
   - component: {fileID: 9066891078937345688}
+  - component: {fileID: 1839662492546480655}
   m_Layer: 0
   m_Name: Reindeer_basic
   m_TagString: Untagged
@@ -4937,6 +4938,18 @@ MonoBehaviour:
     TriggerNameHash: 1080829965
     TransitionIndex: 0
   m_Animator: {fileID: 95946633180251672}
+--- !u!114 &1839662492546480655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820497313580172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a447b84ea78e843bc25d9314a3e936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1820834542966550
 GameObject:
   m_ObjectHideFlags: 0
