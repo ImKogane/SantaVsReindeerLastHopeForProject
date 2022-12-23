@@ -101,12 +101,11 @@ public class WaveSpawner : NetworkBehaviour
 
             if (countdown <= 0f)
             {
-            
                 StartCoroutine(SpawnWave());
+                waveCountText.GetComponent<TMPro.TextMeshProUGUI>().text = waveIndex.ToString();
                 countdown = TimeBetweenWaves;
             }
             countdown -= Time.deltaTime;
-        Debug.Log("timer = " + countdown);
         }
     }
 
@@ -116,10 +115,10 @@ public class WaveSpawner : NetworkBehaviour
     IEnumerator SpawnWave()
     {
         waveIndex++;
-        waveCountText.GetComponent<TextMeshPro>().text = waveIndex.ToString();
        
         for ( int i = 0; i < waveIndex; i++)
         {
+            Debug.Log("Hello!");
             SpawnEnemy();
             yield return new WaitForSeconds(0.5f);
             EnemyController.isMove = true;
