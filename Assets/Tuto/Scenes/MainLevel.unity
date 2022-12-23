@@ -50663,7 +50663,7 @@ MonoBehaviour:
   TimeBetweenWaves: 5
   waveIndex: 0
   EnemiesAlive: 0
-  waveCountText: {fileID: 0}
+  waveCountText: {fileID: 555506185}
 --- !u!4 &2063462733
 Transform:
   m_ObjectHideFlags: 0

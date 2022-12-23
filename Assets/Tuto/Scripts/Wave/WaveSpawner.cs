@@ -40,14 +40,29 @@ public class WaveSpawner : NetworkBehaviour
     }
 
 
+    // protected override void OnNetworkSpawn()
+    // {
+    //     // enabled = IsServer;            
+    //     // if (!enabled)
+    //     // {
+    //     //     return;
+    //     // }
+    //     // // Instantiate the GameObject Instance
+    //     // m_PrefabInstance = Instantiate(PrefabToSpawn);
+    //     //     
+    //     // // Optional, this example applies the spawner's position and rotation to the new instance
+    //     // m_PrefabInstance.transform.position = transform.position;
+    //     // m_PrefabInstance.transform.rotation = transform.rotation;
+    //         
+    //     
+    // }
+
+
     public List<GameObject> spawnedEnemy = new List<GameObject>();
     public Transform[] spawningPoints = new Transform[0];
     
     [SerializeField]
     private float TimeBetweenWaves = 5f;
-
-    [SerializeField]
-    private GameObject waveCountText;
 
     private float countdown;
 
@@ -57,9 +72,18 @@ public class WaveSpawner : NetworkBehaviour
 
     public int EnemiesAlive = 0;
 
+    [SerializeField]
+    private GameObject waveCountText;
+
     private void Start()
     {
+        /*GameObject[] _tempSpawn = GameObject.FindGameObjectsWithTag("Spawner");
+        for(int i = 0; i < _tempSpawn.Length; i++)
+        {
+            spawningPoints[i] = _tempSpawn[i].transform;
+        }*/
         countdown = 5f;
+        Debug.Log("timer = " + countdown);
     }
 
     // Update is called once per frame
@@ -77,14 +101,11 @@ public class WaveSpawner : NetworkBehaviour
 
             if (countdown <= 0f)
             {
-            
                 StartCoroutine(SpawnWave());
+                waveCountText.GetComponent<TMPro.TextMeshProUGUI>().text = waveIndex.ToString();
                 countdown = TimeBetweenWaves;
             }
             countdown -= Time.deltaTime;
-        Debug.Log("timer = " + countdown);
-        } else {
-            // Debug.Log(IsHost);
         }
     }
 
@@ -94,10 +115,10 @@ public class WaveSpawner : NetworkBehaviour
     IEnumerator SpawnWave()
     {
         waveIndex++;
-        waveCountText.GetComponent<TextMeshPro>().text = waveIndex.ToString();
        
         for ( int i = 0; i < waveIndex; i++)
         {
+            Debug.Log("Hello!");
             SpawnEnemy();
             yield return new WaitForSeconds(0.5f);
             EnemyController.isMove = true;
