@@ -83,7 +83,6 @@ public class WaveSpawner : NetworkBehaviour
             spawningPoints[i] = _tempSpawn[i].transform;
         }*/
         countdown = 5f;
-        Debug.Log("timer = " + countdown);
     }
 
     // Update is called once per frame
@@ -118,7 +117,6 @@ public class WaveSpawner : NetworkBehaviour
        
         for ( int i = 0; i < waveIndex; i++)
         {
-            Debug.Log("Hello!");
             SpawnEnemy();
             yield return new WaitForSeconds(0.5f);
             EnemyController.isMove = true;
