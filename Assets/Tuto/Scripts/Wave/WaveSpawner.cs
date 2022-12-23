@@ -75,6 +75,9 @@ public class WaveSpawner : NetworkBehaviour
     [SerializeField]
     private GameObject waveCountText;
 
+    [SerializeField]
+    private Slider waveDelayBar;
+
     private void Start()
     {
         /*GameObject[] _tempSpawn = GameObject.FindGameObjectsWithTag("Spawner");
@@ -97,16 +100,21 @@ public class WaveSpawner : NetworkBehaviour
             else 
             {
                 EnemyController.isMove = false;
+
+                waveDelayBar.enabled = true;
+                waveDelayBar.value = 100;
             }
 
             if (countdown <= 0f)
             {
-            
                 StartCoroutine(SpawnWave());
                 countdown = TimeBetweenWaves;
+                waveDelayBar.enabled = false;
             }
+
             countdown -= Time.deltaTime;
-        Debug.Log("timer = " + countdown);
+            waveDelayBar.value = countdown/TimeBetweenWaves * 100;
+            Debug.Log("timer = " + countdown);
         }
     }
 
