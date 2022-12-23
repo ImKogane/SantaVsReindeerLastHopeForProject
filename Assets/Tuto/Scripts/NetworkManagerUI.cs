@@ -60,6 +60,7 @@ public class NetworkManagerUI : MonoBehaviour
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
             codeText.GetComponent<TMPro.TextMeshProUGUI>().text = joinCode;
+            joinCodeText.GetComponent<TMPro.TextMeshProUGUI>().text = joinCode;
             
             Debug.Log("code : " + joinCode);
 
