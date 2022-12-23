@@ -37,13 +37,10 @@ public class BulletProjectile : NetworkBehaviour
 
     private void Update()
     {
-        if (IsOwner)
+        bTime -= Time.deltaTime;
+        if (bTime <= 0) 
         {
-            bTime -= Time.deltaTime;
-            if (bTime <= 0) 
-            {
-                DestroyServerRpc();
-            }
+            DestroyServerRpc();
         }
     }
 
@@ -71,14 +68,12 @@ public class BulletProjectile : NetworkBehaviour
 
     }
 
-    [ServerRpc]
+    [ServerRpc (RequireOwnership = false)]
     public void DestroyServerRpc()
     {
 
-        gameObject.GetComponent<NetworkObject>().Despawn();
+        //gameObject.GetComponent<NetworkObject>().Despawn();
         Destroy(gameObject);
-    }
-
-    
+    }    
 }
 
