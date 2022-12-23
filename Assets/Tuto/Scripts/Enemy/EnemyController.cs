@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 
 public class EnemyController : NetworkBehaviour
 {
@@ -116,17 +117,37 @@ public class EnemyController : NetworkBehaviour
         inAttack = true;
         //canMove = false;
         SetCooldown();
-        playerController.TakeDamage(enemyStats.damage);
+        AttackServerRpc(player.GetComponent<NetworkObject>().OwnerClientId);
         yield return new WaitForSeconds(0.3f);
         anim.ResetTrigger("Attack");
     }
 
-    // [ServerRpc]
-    // private void AttackServerRpc(ThirdPersonController controller)
-    // {
-    //     controller.PV -= enemyStats.damage;
-    //     Debug.Log(controller.PV);
-    // }
+    [ServerRpc]
+    private void AttackServerRpc(ulong clientId)
+    {
+        var client = NetworkManager.Singleton.ConnectedClients[clientId]
+            .PlayerObject.GetComponent<ThirdPersonController>();
+        client.PV -= enemyStats.damage;
+        Debug.Log(client.PV);
+
+        NotifyHealthChangedClientRpc(enemyStats.damage, new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { clientId }
+            }
+        });
+    }
+
+    [ClientRpc]
+    private void NotifyHealthChangedClientRpc(float damage, ClientRpcParams clientRpcParams = default)
+    {
+        if (IsOwner) return;
+
+        Debug.Log($"Client got damage: {damage}");
+        playerController.PV -= damage;
+        Debug.Log($"Client HP: {playerController.PV}");
+    }
 
     private void GetNearestPlayer()
     {

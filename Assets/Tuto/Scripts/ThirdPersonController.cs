@@ -91,7 +91,8 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
-        public float PV;
+        public float PV = 100f;
+        //private NetworkVariable<float> _pvNetwork = new NetworkVariable<float>();
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -185,6 +186,11 @@ namespace StarterAssets
                 aimVirtualCamera.Follow = transform.GetChild(0).transform;
                 AimStart();
             }
+
+            // if (IsServer)
+            // {
+            //     _pvNetwork.value = PV;
+            // }
         }
 
 
@@ -433,10 +439,11 @@ namespace StarterAssets
             }
         }
 
-        public void TakeDamage(float damage)
-        {
-            PV -= damage;
-        }
+        // [Server]
+        // public void TakeDamage(float damage)
+        // {
+        //     PV -= damage;
+        // }
 
         public void Death()
         {
