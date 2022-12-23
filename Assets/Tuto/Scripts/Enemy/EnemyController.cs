@@ -128,6 +128,7 @@ public class EnemyController : NetworkBehaviour
         var client = NetworkManager.Singleton.ConnectedClients[clientId]
             .PlayerObject.GetComponent<ThirdPersonController>();
         client.PV -= enemyStats.damage;
+        client.UpdateHealthBar();
         Debug.Log(client.PV);
 
         NotifyHealthChangedClientRpc(enemyStats.damage, new ClientRpcParams

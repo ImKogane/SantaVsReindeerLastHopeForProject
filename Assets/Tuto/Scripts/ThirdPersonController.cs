@@ -92,6 +92,7 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
         public float PV = 100f;
+        public Slider healthBar;
         //private NetworkVariable<float> _pvNetwork = new NetworkVariable<float>();
 
         // timeout deltatime
@@ -154,6 +155,7 @@ namespace StarterAssets
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Slider>();
             }
 
         }
@@ -327,6 +329,11 @@ namespace StarterAssets
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
+        }
+
+        public void UpdateHealthBar()
+        {
+            healthBar.value = PV;
         }
 
         private void JumpAndGravity()

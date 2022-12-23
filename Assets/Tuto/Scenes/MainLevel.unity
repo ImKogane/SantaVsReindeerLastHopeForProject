@@ -16432,9 +16432,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 61883623, guid: 34191e115e2b4734eacbf00de0c41d9a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 555506186, guid: 34191e115e2b4734eacbf00de0c41d9a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -34
+      objectReference: {fileID: 0}
+    - target: {fileID: 575006357, guid: 34191e115e2b4734eacbf00de0c41d9a, type: 3}
+      propertyPath: m_TagString
+      value: HealthBar
       objectReference: {fileID: 0}
     - target: {fileID: 575006358, guid: 34191e115e2b4734eacbf00de0c41d9a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -16443,6 +16451,10 @@ PrefabInstance:
     - target: {fileID: 1007011923, guid: 34191e115e2b4734eacbf00de0c41d9a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1547844632, guid: 34191e115e2b4734eacbf00de0c41d9a, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1511034760562692453, guid: 34191e115e2b4734eacbf00de0c41d9a,
         type: 3}

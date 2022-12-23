@@ -12,6 +12,7 @@ TagManager:
   - FirePosition
   - WaveManager
   - snowball
+  - HealthBar
   layers:
   - Default
   - TransparentFX

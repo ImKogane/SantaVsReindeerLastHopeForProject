@@ -110,6 +110,7 @@ public class WaveSpawner : NetworkBehaviour
                 StartCoroutine(SpawnWave());
                 waveCountText.GetComponent<TMPro.TextMeshProUGUI>().text = waveIndex.ToString();
                 countdown = TimeBetweenWaves;
+
                 waveDelayBar.enabled = false;
             }
 
